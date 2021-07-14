@@ -9,7 +9,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 @Mapper
 public interface RedItemMapper {
-    int insert(RedItem record);
+    //int insert(RedItem record);
 
     int updateByPrimaryKeySelective(RedItem record);
 
