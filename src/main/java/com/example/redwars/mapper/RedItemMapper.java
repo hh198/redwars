@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface RedItemMapper {
     //int insert(RedItem record);
+    //dwa
 
     int updateByPrimaryKeySelective(RedItem record);
 
