@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redwars.mapper.RedItemMapper">
+  <resultMap id="BaseResultMap" type="com.example.redwars.model.RedItem">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="value" jdbcType="REAL" property="value" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, rid, uid, value, status
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reditem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reditem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.redwars.model.RedItem" useGeneratedKeys="true">
+    insert into reditem (rid, uid, value, status) values
+    (#{rid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{value,jdbcType=REAL},
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.redwars.model.RedItem" useGeneratedKeys="true">
+    insert into reditem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=REAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.redwars.model.RedItem">
+    update reditem
+    <set>
+      <if test="rid != null">
+        rid = #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=REAL},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.redwars.model.RedItem">
+    update reditem
+    set rid = #{rid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      value = #{value,jdbcType=REAL},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--  zijishengming-->
+  <select id="selectByRid" resultType="redItem">
+    select *
+    from reditem
+    where rid = #{rid}
+  </select>
+  <select id="selectByRidAndStatus" resultType="redItem" >
+    select *
+    from reditem
+    where rid = #{rid} and status = #{status}
+  </select>
+  <insert id="insertList"  parameterType="java.util.List">
+    insert into reditem(rid, uid, value, status) values
+    <foreach collection="list" item="reditem" index="index" separator="," >
+      (#{reditem.rid,jdbcType=INTEGER}, #{reditem.uid,jdbcType=INTEGER}, #{reditem.value,jdbcType=REAL},
+      #{reditem.status,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+</mapper>

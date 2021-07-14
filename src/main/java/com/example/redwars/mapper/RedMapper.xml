@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.redwars.mapper.RedMapper">
+  <resultMap id="BaseResultMap" type="com.example.redwars.model.Red">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="remain" jdbcType="INTEGER" property="remain" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, money, num, remain, createDate, uid, status
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from red
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from red
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.redwars.model.Red" useGeneratedKeys="true">
+    insert into red
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="money != null">
+        money,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="remain != null">
+        remain,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="money != null">
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null">
+        #{remain,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.redwars.model.Red">
+    update red
+    <set>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null">
+        remain = #{remain,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.redwars.model.Red">
+    update red
+    set money = #{money,jdbcType=REAL},
+      num = #{num,jdbcType=INTEGER},
+      remain = #{remain,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--以下是自己建立，非逆向工程-->
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.redwars.model.Red" useGeneratedKeys="true">
+    insert into red (money, num, remain,createDate, uid, status)
+    values (#{money}, #{num}, #{remain},
+      #{createdate}, #{uid}, #{status})
+  </insert>
+  <select id="selectTimeById" resultType="java.util.Date">
+    select createDate
+    from red
+    where id = #{id}
+  </select>
+  <select id="selectUidById" resultType="java.lang.Integer">
+    select uid
+    from red
+    where id = #{id}
+  </select>
+  <select id="selectRemainById" resultType="java.lang.Integer">
+    select remain
+    from red
+    where id = #{id}
+  </select>
+  <select id="selectRidByStatus" resultType="java.lang.Integer">
+    select id
+    from red
+    where status = #{status1} or status = #{status2}
+
+  </select>
+  <select id="selectStatusById" resultType="java.lang.String">
+    select status
+    from red
+    where id = #{id}
+  </select>
+  <update id="updateRemainByPrimaryKeySelective" parameterType="com.example.redwars.model.Red">
+    update red
+    <set>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null">
+        remain = remain -  #{remain,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
