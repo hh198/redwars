@@ -11,7 +11,7 @@ import java.util.List;
 public interface RedItemMapper {
     //int insert(RedItem record);
     //dwa
-
+//master test
     int updateByPrimaryKeySelective(RedItem record);
 
     int insertList(@Param("list") List<RedItem> list);
